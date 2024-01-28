@@ -1,6 +1,7 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { ApiConnectService } from '../../services/api-connect/api-connect.service';
 import { Response } from 'express';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('v1/api-connect')
 export class ApiConnectController {
@@ -17,6 +18,12 @@ export class ApiConnectController {
    * Example route: GET /api-connect/top-repositories
    * This route would call this method and return the top 10 repositories of the 'google' user on GitHub.
    */
+  @ApiTags('Github Connect') // Swagger decorator
+  @ApiResponse({
+    status: 200,
+    description: 'List of top repositories from Google.',
+  })
+  @ApiResponse({ status: 500, description: 'Error getting repositories' })
   @Get('top-repositories')
   async getTopRepositories(@Res() response: Response) {
     try {
